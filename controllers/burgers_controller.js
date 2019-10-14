@@ -26,7 +26,7 @@ module.exports = function(app) {
           burgerId: burger.id
           }
       }).then((dbRes) => {
-          console.log("Burger with id " + dbRes.id + "is devoured");
+          console.log("Burger with id " + burger.id + " is devoured");
           res.json(dbRes);
       });
     })   
