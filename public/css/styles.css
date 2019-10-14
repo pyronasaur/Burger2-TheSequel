@@ -1,0 +1,11 @@
+button.submit {
+  float: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.top-30 {
+  margin-top: 30px;
+}
