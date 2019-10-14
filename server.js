@@ -11,7 +11,7 @@ app.use(express.static("public"));
 // require controller
 require("./controllers/burgers_controller.js")(app);
 console.log("before I synced i guess");
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync({ force: false }).then(function() {
   console.log("synced i guess");
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
