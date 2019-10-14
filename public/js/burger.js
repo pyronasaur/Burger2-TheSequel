@@ -9,9 +9,7 @@ $(document).ready(function() {
         event.preventDefault();
         const burgerInput = $("#burgerInput").val();
 
-        const burgerInfo = saveBurger(burgerInput);
-        console.log(burgerInfo);
-        //addBurger(1, burgerInput);
+        addBurger(burgerInput);
     })
 
 
@@ -35,18 +33,40 @@ $(document).ready(function() {
         }
     }
 
-    const addBurger = (id, burgerName) => {
-        $(".to-eat-list").append('<div class="burgerGroup d-flex"><div class="card d-flex h-75 w-75"><div class="card-body">' +
-        id + '. ' + burgerName +
-        '</div></div><button class="btn btn-success d-flex align-items-center ml-5 devour">Devour It</button></div>');
+    const addBurger = async (burgerName) => {
+        
+        const burgerInfo = await saveBurger(burgerName);
+        console.log(burgerInfo);
+
+        $(".to-eat-list").append('<div class="burgerGroup d-flex" id=' + burgerInfo.burgerId + '><div class="card d-flex h-75 w-75"><div class="card-body">' +
+        burgerInfo.burgerId + '. ' + burgerInfo.burgerName +
+        '</div></div><button class="btn btn-success d-flex align-items-center ml-5 devour" data-burgerId=' + 
+        burgerInfo.burgerId + ' data-burgerName=' +
+        burgerInfo.burgerName + '>Devour It</button></div>');
     }
 
-    const devour = (id, burgerName) => {
+    const devour = () => {
         event.preventDefault();
+        console.log($(this));
         $(".devoured-list").append('<div class="card mx-auto w-75"><div class="card-body">' +
             'yummy' + 
             '</div></div>');
     }
 
-    $(document).on("click", "button.devour", devour);
+    $(document).on("click", "button.devour", function() {
+        event.preventDefault();
+
+        const burgerId = $(this).attr('data-burgerid');
+        const burgerName = $(this).attr('data-burgername');
+
+        console.log(`Burger ID: ${burgerId} and Burger Name: ${burgerName}`);
+
+        devourBurger(burgerId);
+
+        $(".devoured-list").append('<div class="card mx-auto w-75"><div class="card-body">' +
+            burgerId + '. ' + burgerName +
+            '</div></div>');
+        
+        $("#"+burgerId).remove();
+    });
 });

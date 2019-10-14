@@ -14,6 +14,9 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+console.log("sequelize " + Object.getOwnPropertyNames(sequelize));
+
+console.log("config " + sequelize.config.database);
 
 fs
   .readdirSync(__dirname)
@@ -30,7 +33,7 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
-
+console.log("models " + Object.getOwnPropertyNames(sequelize.models));
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
